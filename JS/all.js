@@ -74,8 +74,8 @@ $('.btn_ipv6').on('click',function(){
     const replaceStr2 = (str, index, char) => {
         return str.substring(0, index) + char + str.substring(index + 1);
     }
-    const replaceStr3 = (str, fisd_1,second_2) => {
-        return "fe80::" + fisd_1 + second_2 + str.substring(2,4) +":"+ str.substring(4,6)+"ff:fe"+str.substring(6,8)+":"+str.substring(8,12);
+    const replaceStr3 = (str,second_2) => {
+        return "FE80::" + str.substring(0,1) + second_2 + str.substring(2,4) +":"+ str.substring(4,6)+"FF:FE"+str.substring(6,8)+":"+str.substring(8,12);
     }
      //index = 1 取出16進位 index= 2 轉換後的二進位後找出16進位
     const take_out_fn = (index) => {
@@ -88,9 +88,9 @@ $('.btn_ipv6').on('click',function(){
                     second_hex_obj = item ;
                 }
             } else if(index = 2){
-                if(item.num == first_convert_num){
-                    first_hex_obj = item ;
-                }
+                // if(item.num == first_convert_num){
+                //     first_hex_obj = item ;
+                // }
                 if(item.num == second_convert_num){
                     second_hex_obj = item ;
                 }
@@ -101,11 +101,11 @@ $('.btn_ipv6').on('click',function(){
     take_out_fn(1);
     //二進位倒數第二碼傳換
     //第一碼的二進位轉換
-    if(first_hex_obj.num.substring(2,3) == '1'){
-        first_convert_num = replaceStr2(first_hex_obj.num,2,'0');
-    } else {
-        first_convert_num = replaceStr2(first_hex_obj.num,2,'1');
-    }
+    // if(first_hex_obj.num.substring(2,3) == '1'){
+    //     first_convert_num = replaceStr2(first_hex_obj.num,2,'0');
+    // } else {
+    //     first_convert_num = replaceStr2(first_hex_obj.num,2,'1');
+    // }
     //第二碼的二進位轉換
     if(second_hex_obj.num.substring(2,3) == '1'){
         second_convert_num = replaceStr2(second_hex_obj.num,2,'0');
@@ -115,7 +115,7 @@ $('.btn_ipv6').on('click',function(){
     //轉換後的二進位後找出16進位
     take_out_fn(2);
     //最後組合
-    ipv6_end = replaceStr3(str,first_hex_obj.name,second_hex_obj.name);
+    ipv6_end = replaceStr3(str,second_hex_obj.name);
     console.log(ipv6_end);
-    $('.IPV6_TEXT').html('<h3>IPV6: <span class="badge bg-secondary">'+ipv6_end+'</span></h3>');
+    $('.IPV6_TEXT').html('<h3 class="d-flex align-items-center">IPV6: <span class="badge bg-secondary">'+ipv6_end+'</span></h3>');
 });
